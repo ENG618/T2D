@@ -6,12 +6,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class DevicesActivity extends ActionBarActivity {
+public class DevicesActivity extends ActionBarActivity implements DevicesListFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
+                .commit();
     }
 
 
@@ -35,5 +40,10 @@ public class DevicesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+
     }
 }
