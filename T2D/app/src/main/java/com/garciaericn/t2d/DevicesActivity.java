@@ -1,12 +1,12 @@
 package com.garciaericn.t2d;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class DevicesActivity extends ActionBarActivity implements DevicesListFragment.OnFragmentInteractionListener{
+public class DevicesActivity extends Activity implements DevicesListFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
