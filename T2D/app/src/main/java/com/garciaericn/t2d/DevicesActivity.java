@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.garciaericn.t2d.fragments.DevicesListFragment;
+
 
 public class DevicesActivity extends Activity implements DevicesListFragment.OnFragmentInteractionListener{
 
