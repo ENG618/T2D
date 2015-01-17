@@ -24,12 +24,9 @@ public class SettingsActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SettingsFragment fragment = new SettingsFragment();
-
         //Create and set preferences fragment
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.settings_fragment_container, fragment, SettingsFragment.TAG)
+        getFragmentManager().beginTransaction()
+                .replace(R.id.settings_fragment_container, new SettingsFragment(), SettingsFragment.TAG)
                 .commit();
     }
 
