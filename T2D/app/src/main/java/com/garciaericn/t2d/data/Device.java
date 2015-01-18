@@ -7,8 +7,9 @@ package com.garciaericn.t2d.data;
  */
 public class Device {
 
-    public String deviceName;
-    public float currentBateryLevel;
+    private String deviceName;
+    private float currentBateryLevel;
+    private boolean isCharging;
 
     public Device() {
     }

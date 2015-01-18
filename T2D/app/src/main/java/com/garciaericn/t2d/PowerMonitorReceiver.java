@@ -13,12 +13,16 @@ import android.widget.Toast;
  */
 public class PowerMonitorReceiver extends BroadcastReceiver {
 
-    private float currentBateryLevel;
+    private float currentBatteryLevel;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
+
+        if (isCharging) {
+            Toast.makeText(context, "Device is charging", Toast.LENGTH_SHORT).show();
+        }
 
         int chargePlug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
@@ -27,6 +31,8 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
         int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-        currentBateryLevel = level / (float) scale;
+        currentBatteryLevel = level / (float) scale;
+
+        Toast.makeText(context, "Current battery level: " + Float.toString(currentBatteryLevel) + "%", Toast.LENGTH_SHORT).show();
     }
 }
