@@ -21,8 +21,6 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
 
         // Obtain action from intent to check which broadcast is being received
         String action = intent.getAction();
@@ -44,6 +42,9 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
             case (Intent.ACTION_POWER_CONNECTED): {
                 Log.i(TAG, "Power connected");
 
+                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
+
                 int chargePlug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
                 boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
                 boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
@@ -56,7 +57,7 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
                     chargingType = "AC Power";
                 }
 
-                if (chargingType != null) {
+                if (isCharging && chargingType != null) {
                     Toast.makeText(context, "Device is charging via: " + chargingType, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "Device is charging.", Toast.LENGTH_SHORT).show();
@@ -65,14 +66,17 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
             }
             case (Intent.ACTION_POWER_DISCONNECTED): {
                 Log.i(TAG, "Power disconnected");
+                Toast.makeText(context, "Power Disconnected", Toast.LENGTH_SHORT).show();
                 break;
             }
             case (Intent.ACTION_BATTERY_LOW): {
                 Log.i(TAG, "Battery low");
+                Toast.makeText(context, "Battery low", Toast.LENGTH_SHORT).show();
                 break;
             }
             case (Intent.ACTION_BATTERY_OKAY): {
                 Log.i(TAG, "Battery Okay");
+                Toast.makeText(context, "Battery Okay", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
