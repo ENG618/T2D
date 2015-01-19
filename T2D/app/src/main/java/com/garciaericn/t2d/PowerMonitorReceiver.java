@@ -57,17 +57,23 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
                 }
 
                 if (chargingType != null) {
-                    Toast.makeText(context, "Device is charging", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Device is charging via: " + chargingType, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Device is charging.", Toast.LENGTH_SHORT).show();
                 }
+                break;
             }
             case (Intent.ACTION_POWER_DISCONNECTED): {
                 Log.i(TAG, "Power disconnected");
+                break;
             }
             case (Intent.ACTION_BATTERY_LOW): {
                 Log.i(TAG, "Battery low");
+                break;
             }
             case (Intent.ACTION_BATTERY_OKAY): {
                 Log.i(TAG, "Battery Okay");
+                break;
             }
         }
     }
