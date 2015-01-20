@@ -27,18 +27,21 @@ public class PowerMonitorReceiver extends BroadcastReceiver {
 
         // Perform action according to type
         switch (action) {
-            case (Intent.ACTION_BATTERY_CHANGED): {
-                Log.i(TAG, "Battery has changed");
-
-                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-
-                currentBatteryLevel = (level * 100) / (float) scale;
-
-                Toast.makeText(context, "Current battery level: " + Float.toString(currentBatteryLevel) + "%" + " level: " + level + " scale: " + scale, Toast.LENGTH_LONG).show();
-
-                break;
-            }
+//            case (Intent.ACTION_BATTERY_CHANGED): {
+//                Log.i(TAG, "Battery has changed");
+//
+//                int currentLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+//                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+//                currentBatteryLevel = -1;
+//
+//                if (currentLevel >= 0 && scale > 0) {
+//                    currentBatteryLevel = (currentLevel * 100) / scale;
+//                    Toast.makeText(context, "Current battery level: " + Float.toString(currentBatteryLevel) + "%" + " level: " + currentLevel + " scale: " + scale, Toast.LENGTH_LONG).show();
+//                }
+//
+//
+//                break;
+//            }
             case (Intent.ACTION_POWER_CONNECTED): {
                 Log.i(TAG, "Power connected");
 
