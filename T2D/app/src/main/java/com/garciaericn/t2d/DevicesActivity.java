@@ -5,21 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.garciaericn.t2d.fragments.DevicesListFragment;
 
 
-public class DevicesActivity extends Activity implements DevicesListFragment.OnFragmentInteractionListener{
+public class DevicesActivity extends Activity implements
+        DevicesListFragment.OnFragmentInteractionListener,
+        DevicesCardViewFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
+        getFragmentManager().beginTransaction()
+                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+//                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
                 .commit();
     }
 
