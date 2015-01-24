@@ -8,20 +8,29 @@ import android.view.MenuItem;
 
 import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.garciaericn.t2d.fragments.DevicesListFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 public class DevicesActivity extends Activity implements
         DevicesListFragment.OnFragmentInteractionListener,
         DevicesCardViewFragment.OnFragmentInteractionListener{
 
+    private AdView adView;
+    private static final String DEVICE_ID = "3FCECABB61B244A968AC658FD8EE05D9";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
 
+        adView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
+        adView.loadAd(adRequest);
+
         getFragmentManager().beginTransaction()
-                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
-//                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
+//                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
                 .commit();
     }
 
