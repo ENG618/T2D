@@ -10,4 +10,6 @@
     <string name="placeholder_device_name">Device Name</string>
     <string name="placeholder_percentage">100%</string>
 
+    <string name="admob_id">ca-app-pub-2441210659621996/2767217866</string>
+
 </resources>
