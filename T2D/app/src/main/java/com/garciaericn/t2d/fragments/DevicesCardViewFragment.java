@@ -40,23 +40,24 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get arguments
-
-
-        // Create recycler view
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.devices_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-//        mAdapter = new
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_devices_list, container, false);
+        View view =  inflater.inflate(R.layout.fragment_devices_list, container, false);
+
+        // Obtain recycler view
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.devices_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        // Set layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+
+        return view;
     }
 
     @Override

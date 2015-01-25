@@ -27,6 +27,11 @@ public class DevicesActivity extends Activity implements
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
         adView.loadAd(adRequest);
 
+        // Enable Local Datastore.
+//        Parse.enableLocalDatastore(this);
+//
+//        Parse.initialize(this, "mlbATdfRQ2RMJmNaVjjDcIybrtKnlEmic94bBL6r", "20c54czHXPKcb4ErBfbQe9q9vE9kaf6zS0A4GeLA");
+
         getFragmentManager().beginTransaction()
                 .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
 //                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
