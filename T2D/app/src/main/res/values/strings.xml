@@ -11,5 +11,6 @@
     <string name="placeholder_percentage">100%</string>
 
     <string name="admob_id">ca-app-pub-2441210659621996/2767217866</string>
+    <string name="placeholder_is_charging">Is charging.</string>
 
 </resources>

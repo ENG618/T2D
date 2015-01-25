@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +18,13 @@ import com.garciaericn.t2d.R;
  * Mobile Development BS
  * Created by ENG618-Mac on 1/20/15.
  */
-public class DevicesCardViewFragment extends Fragment {
+public class DevicesCardViewFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public DevicesCardViewFragment() {
         // Required empty public constructor
@@ -33,6 +40,17 @@ public class DevicesCardViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get arguments
+
+
+        // Create recycler view
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.devices_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+//        mAdapter = new
     }
 
     @Nullable
@@ -56,6 +74,11 @@ public class DevicesCardViewFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        // Click events go here
     }
 
     public interface OnFragmentInteractionListener {

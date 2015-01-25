@@ -13,7 +13,6 @@ import com.google.android.gms.ads.AdView;
 
 
 public class DevicesActivity extends Activity implements
-        DevicesListFragment.OnFragmentInteractionListener,
         DevicesCardViewFragment.OnFragmentInteractionListener{
 
     private AdView adView;
@@ -29,8 +28,8 @@ public class DevicesActivity extends Activity implements
         adView.loadAd(adRequest);
 
         getFragmentManager().beginTransaction()
-//                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
-                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
+                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+//                .replace(R.id.list_container, DevicesListFragment.newInstance("test", "testing"))
                 .commit();
     }
 
@@ -53,10 +52,5 @@ public class DevicesActivity extends Activity implements
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onFragmentInteraction(String id) {
-
     }
 }
