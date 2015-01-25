@@ -1,5 +1,7 @@
 package com.garciaericn.t2d.data;
 
+import com.parse.ParseObject;
+
 /**
  * Full Sail University
  * Mobile Development BS
@@ -7,17 +9,30 @@ package com.garciaericn.t2d.data;
  */
 public class Device {
 
+    public static final String DEVICE_NAME = "DEVICE_NAME";
+    public static final String CURRENT_BATTERY_LEVEL = "CURRENT_BATTERY_LEVEL";
+    public static final String IS_CHARGING = "IS_CHARGING";
+
     private String deviceName;
-    private float currentBateryLevel;
+    private float currentBatteryLevel;
     private boolean isCharging;
 
     public Device() {
     }
 
-    public Device(String deviceName, float currentBateryLevel, boolean isCharging) {
+    public Device(String deviceName, float currentBatteryLevel, boolean isCharging) {
         this.deviceName = deviceName;
-        this.currentBateryLevel = currentBateryLevel;
+        this.currentBatteryLevel = currentBatteryLevel;
         this.isCharging = isCharging;
+
+
+        ParseObject device = new ParseObject("Device");
+        device.put(DEVICE_NAME, deviceName);
+        device.put(CURRENT_BATTERY_LEVEL, currentBatteryLevel);
+        device.put(IS_CHARGING, isCharging);
+        device.pinInBackground();
+        device.saveInBackground();
+
     }
 
     // Getters and Setters
@@ -31,12 +46,12 @@ public class Device {
         this.deviceName = deviceName;
     }
 
-    public float getCurrentBateryLevel() {
-        return currentBateryLevel;
+    public float getCurrentBatteryLevel() {
+        return currentBatteryLevel;
     }
 
-    public void setCurrentBateryLevel(float currentBateryLevel) {
-        this.currentBateryLevel = currentBateryLevel;
+    public void setCurrentBatteryLevel(float currentBatteryLevel) {
+        this.currentBatteryLevel = currentBatteryLevel;
     }
 
     public boolean isCharging() {
@@ -45,5 +60,9 @@ public class Device {
 
     public void setCharging(boolean isCharging) {
         this.isCharging = isCharging;
+    }
+
+    public void updateDeviceInParse() {
+
     }
 }

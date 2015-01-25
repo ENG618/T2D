@@ -14,8 +14,7 @@ import android.widget.Toast;
  */
 public class PowerMonitorReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "PowerMonitorReceiver.TAG";
-    private float currentBatteryLevel;
+    private static final String TAG = "PMReceiver.TAG";
 
     @Override
     public void onReceive(Context context, Intent intent) {

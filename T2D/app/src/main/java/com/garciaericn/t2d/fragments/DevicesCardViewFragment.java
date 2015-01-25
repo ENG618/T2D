@@ -2,16 +2,20 @@ package com.garciaericn.t2d.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.garciaericn.t2d.R;
+import com.parse.ParseObject;
 
 /**
  * Full Sail University
@@ -21,6 +25,7 @@ import com.garciaericn.t2d.R;
 public class DevicesCardViewFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
+    Intent mbatteryStatus;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -40,6 +45,32 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get arguments
+
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        mbatteryStatus = getActivity().registerReceiver(null, intentFilter);
+
+        // Update stats of current device.
+
+        Toast.makeText(getActivity(), "Battery level: " + getCurrentBatteryLevel() + "%", Toast.LENGTH_LONG).show();
+
+        ParseObject device = new ParseObject("Device");
+        device.put("DEVICE_NAME", "Nexus 5");
+        device.put("CURRENT_BATTERY_LEVEL", getCurrentBatteryLevel());
+        device.pinInBackground();
+        device.saveInBackground();
+
+    }
+
+    private int getCurrentBatteryLevel() {
+        if (mbatteryStatus == null) {
+            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            mbatteryStatus = getActivity().registerReceiver(null, intentFilter);
+        }
+
+        int level = mbatteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = mbatteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+
+        return level * 100 / scale;
     }
 
     @Nullable
