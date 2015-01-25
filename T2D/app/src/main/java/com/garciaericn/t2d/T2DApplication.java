@@ -2,6 +2,8 @@ package com.garciaericn.t2d;
 
 import android.app.Application;
 
+import com.parse.Parse;
+
 
 /**
  * Full Sail University
@@ -15,8 +17,8 @@ public class T2DApplication extends Application {
         super.onCreate();
 
         // Enable Local Datastore.
-//        Parse.enableLocalDatastore(this);
-//
-//        Parse.initialize(this, "mlbATdfRQ2RMJmNaVjjDcIybrtKnlEmic94bBL6r", "20c54czHXPKcb4ErBfbQe9q9vE9kaf6zS0A4GeLA");
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this, "mlbATdfRQ2RMJmNaVjjDcIybrtKnlEmic94bBL6r", "20c54czHXPKcb4ErBfbQe9q9vE9kaf6zS0A4GeLA");
     }
 }

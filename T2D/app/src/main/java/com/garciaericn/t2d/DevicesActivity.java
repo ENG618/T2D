@@ -10,6 +10,7 @@ import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.garciaericn.t2d.fragments.DevicesListFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.parse.ParseObject;
 
 
 public class DevicesActivity extends Activity implements
