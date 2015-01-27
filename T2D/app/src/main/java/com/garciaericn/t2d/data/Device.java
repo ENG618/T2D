@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Mobile Development BS
  * Created by ENG618-Mac on 1/17/15.
  */
-public class Device {
+public class Device extends ParseObject{
 
     public static final String DEVICE_NAME = "DEVICE_NAME";
     public static final String CURRENT_BATTERY_LEVEL = "CURRENT_BATTERY_LEVEL";
