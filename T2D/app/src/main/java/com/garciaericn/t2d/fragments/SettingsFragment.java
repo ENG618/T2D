@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.garciaericn.t2d.DevicesActivity;
 import com.garciaericn.t2d.R;
@@ -34,15 +35,26 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         //Load xml layout
         addPreferencesFromResource(R.xml.settings);
+
+        // Set click listeners
+        findPreference(TEST_KEY).setOnPreferenceClickListener(this);
+        findPreference(LOG_OUT).setOnPreferenceClickListener(this);
+
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        String key = preference.getKey();
-        switch (key) {
-            case (key.equals(LOG_OUT)): {
+        switch (preference.getKey()) {
+            case (LOG_OUT): {
                 ParseUser.logOut();
                 ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+
+                Toast.makeText(getActivity(), "You have been logged out", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case TEST_KEY: {
+                Toast.makeText(getActivity(), "Testing", Toast.LENGTH_SHORT).show();
+                return true;
             }
         }
         return false;
