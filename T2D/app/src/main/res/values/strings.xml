@@ -12,5 +12,10 @@
 
     <string name="admob_id">ca-app-pub-2441210659621996/2767217866</string>
     <string name="placeholder_is_charging">Is charging.</string>
+    <string name="label_sign_up_email">Email:</string>
+    <string name="hint_email">example@email.com</string>
+    <string name="button_sign_up">Sing up</string>
+    <string name="label_sign_up_password">Password:</string>
+    <string name="button_log_in">Log In</string>
 
 </resources>
