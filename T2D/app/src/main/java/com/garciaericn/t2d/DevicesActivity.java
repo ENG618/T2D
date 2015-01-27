@@ -2,13 +2,16 @@ package com.garciaericn.t2d;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.garciaericn.t2d.data.Device;
 import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -54,6 +57,15 @@ public class DevicesActivity extends Activity implements
 //
 //            }
 //        });
+
+
+
+        Device currentDevice = new Device(Build.MODEL, 50, false);
+//
+//        ParseObject device = new ParseObject("Devices");
+//        device.put("DEVICE", currentDevice);
+//        device.saveInBackground();
+
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.list_container, DevicesCardViewFragment.newInstance())

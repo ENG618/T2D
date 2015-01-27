@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.garciaericn.t2d.R;
+import com.garciaericn.t2d.data.BatteryHelper;
+import com.garciaericn.t2d.data.Device;
 import com.parse.ParseObject;
 
 /**
@@ -25,6 +28,7 @@ import com.parse.ParseObject;
 public class DevicesCardViewFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
+    private BatteryHelper mBatteryHelper;
     Intent mbatteryStatus;
 
     private RecyclerView mRecyclerView;
@@ -46,34 +50,26 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         // Get arguments
 
+        mBatteryHelper = new BatteryHelper(getActivity());
+
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         mbatteryStatus = getActivity().registerReceiver(null, intentFilter);
 
         // Update stats of current device.
 
-        Toast.makeText(getActivity(), "Battery level: " + getCurrentBatteryLevel() + "%", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Battery level: " + mBatteryHelper.getCurrentBatteryLevel() + "%", Toast.LENGTH_LONG).show();
+
+        Device currentDevice = new Device(Build.MODEL, mBatteryHelper.getCurrentBatteryLevel(), mBatteryHelper.isCharging());
 
         ParseObject device = new ParseObject("Device");
-        device.put("DEVICE_NAME", "Nexus 5");
-        device.put("CURRENT_BATTERY_LEVEL", getCurrentBatteryLevel());
+        device.put(Device.DEVICE_NAME, Build.MODEL);
+        device.put(Device.CURRENT_BATTERY_LEVEL, mBatteryHelper.getCurrentBatteryLevel());
+        device.put(Device.IS_CHARGING, mBatteryHelper.isCharging());
         device.pinInBackground();
         device.saveInBackground();
 
     }
 
-    private int getCurrentBatteryLevel() {
-        if (mbatteryStatus == null) {
-            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            mbatteryStatus = getActivity().registerReceiver(null, intentFilter);
-        }
-
-        int level = mbatteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = mbatteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-
-        return level * 100 / scale;
-    }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_devices_list, container, false);
