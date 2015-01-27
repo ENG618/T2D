@@ -50,6 +50,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
 
                 Toast.makeText(getActivity(), "You have been logged out", Toast.LENGTH_SHORT).show();
+
+                Intent relaodIntent = new Intent(getActivity(), DevicesActivity.class);
+                startActivity(relaodIntent);
                 return true;
             }
             case TEST_KEY: {
