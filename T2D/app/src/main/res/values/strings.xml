@@ -17,5 +17,6 @@
     <string name="button_sign_up">Sing up</string>
     <string name="label_sign_up_password">Password:</string>
     <string name="button_log_in">Log In</string>
+    <string name="hint_password">Password</string>
 
 </resources>

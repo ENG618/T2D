@@ -10,4 +10,9 @@
 
     </PreferenceCategory>
 
+    <Preference
+        android:key="LOG_OUT"
+        android:title="Log out"
+        android:summary="This will log you out of the application"/>
+
 </PreferenceScreen>

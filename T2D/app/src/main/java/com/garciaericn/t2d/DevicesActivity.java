@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.garciaericn.t2d.data.Device;
 import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
+import com.garciaericn.t2d.fragments.SignUpFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.parse.ParseObject;
@@ -34,42 +35,18 @@ public class DevicesActivity extends Activity implements
         adView.loadAd(adRequest);
 
 
-//        ParseUser user = new ParseUser();
-//        user.setUsername("my name");
-//        user.setPassword("my pass");
-//        user.setEmail("email@example.com");
-//
-//        // other fields can be set just like with ParseObject
-//        user.put("phone", "650-555-0000");
-//
-//        user.signUpInBackground(new SignUpCallback() {
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    // Hooray! Let them use the app now.
-//                } else {
-//                    // Sign up didn't succeed. Look at the ParseException
-//                    // to figure out what went wrong
-//                }
-//            }
-//
-//            @Override
-//            public void done(com.parse.ParseException e) {
-//
-//            }
-//        });
-
-
-
-        Device currentDevice = new Device(Build.MODEL, 50, false);
-//
-//        ParseObject device = new ParseObject("Devices");
-//        device.put("DEVICE", currentDevice);
-//        device.saveInBackground();
-
-
-        getFragmentManager().beginTransaction()
-                .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
-                .commit();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+                    .commit();
+        } else {
+            // show the signup or login screen
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.list_container, SignUpFragment.newInstance())
+                    .commit();
+        }
     }
 
 

@@ -19,7 +19,7 @@
                 android:text="@string/label_sign_up_email"
                 android:layout_weight="0"/>
 
-            <EditText
+            <EditText android:id="@+id/signUpEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_email"
@@ -37,22 +37,23 @@
         <EditText android:id="@+id/signUpPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_email"
-            android:layout_weight="1"/>
+            android:hint="@string/hint_password"
+            android:layout_weight="1"
+            android:inputType="textPassword" />
 
         </TableRow>
 
 
     </TableLayout>
 
-    <Button
+    <Button android:id="@+id/button_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_sign_up"
         android:background="#FF5722"
         android:textColor="@android:color/white"/>
 
-    <Button
+    <Button android:id="@+id/button_log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_log_in"
