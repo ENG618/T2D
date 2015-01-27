@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +13,8 @@ import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.garciaericn.t2d.fragments.SignUpFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.parse.LogInCallback;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -20,7 +23,8 @@ import java.text.ParseException;
 
 
 public class DevicesActivity extends Activity implements
-        DevicesCardViewFragment.OnFragmentInteractionListener{
+        DevicesCardViewFragment.OnFragmentInteractionListener,
+        SignUpFragment.SignUpFragmentCallbacks{
 
     private AdView adView;
     private static final String DEVICE_ID = "3FCECABB61B244A968AC658FD8EE05D9";
@@ -68,5 +72,21 @@ public class DevicesActivity extends Activity implements
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void facebookSignUp() {
+//        ParseFacebookUtils.logIn(this, new LogInCallback() {
+//            @Override
+//            public void done(ParseUser user, ParseException err) {
+//                if (user == null) {
+//                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+//                } else if (user.isNew()) {
+//                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+//                } else {
+//                    Log.d("MyApp", "User logged in through Facebook!");
+//                }
+//            }
+//        });
     }
 }
