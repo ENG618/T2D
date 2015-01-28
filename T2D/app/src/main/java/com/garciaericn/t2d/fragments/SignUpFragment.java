@@ -170,7 +170,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
-                    Toast.makeText(getActivity(), "Something went wrong...please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Something went wrong..." + e.toString(), Toast.LENGTH_LONG).show();
                 }
             }
         });
