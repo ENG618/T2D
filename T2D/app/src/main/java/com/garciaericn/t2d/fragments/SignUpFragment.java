@@ -1,5 +1,7 @@
 package com.garciaericn.t2d.fragments;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -8,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +20,11 @@ import com.garciaericn.t2d.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Full Sail University
@@ -26,8 +35,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
     private SignUpFragmentCallbacks mListener;
 
-    private EditText emailField;
+    private AutoCompleteTextView emailField;
     private EditText passwordField;
+    private Set<String> emailSet;
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", Pattern.CASE_INSENSITIVE);
 
     public SignUpFragment() {
         // Mandatory empty constructor
@@ -40,7 +51,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (emailSet == null) {
+            emailSet = new HashSet<String>();
+        }
 
     }
 
@@ -49,13 +62,25 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         setButtonClickListeners(view);
+        getAccouts();
 
-
-        emailField = (EditText) view.findViewById(R.id.signUpEmail);
+        emailField = (AutoCompleteTextView) view.findViewById(R.id.signUpEmail);
+        emailField.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(emailSet)));
         passwordField = (EditText) view.findViewById(R.id.signUpPassword);
 
 
         return view;
+    }
+
+    private void getAccouts() {
+        AccountManager manager = (AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE);
+        Account[] list = manager.getAccounts();
+
+        for (Account account : list) {
+            if (EMAIL_PATTERN.matcher(account.name).matches()) {
+                emailSet.add(account.name);
+            }
+        }
     }
 
     private void setButtonClickListeners(View view) {

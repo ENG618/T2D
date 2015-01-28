@@ -19,12 +19,13 @@
                 android:text="@string/label_sign_up_email"
                 android:layout_weight="0"/>
 
-            <EditText android:id="@+id/signUpEmail"
+            <AutoCompleteTextView android:id="@+id/signUpEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
                 android:layout_weight="1"
-                android:inputType="textEmailAddress" />
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"/>
+
         </TableRow>
 
         <TableRow>
