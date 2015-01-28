@@ -13,13 +13,13 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/signUpEmailLabel"
+                android:id="@+id/loginEmailLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_sign_up_email"
                 android:layout_weight="0"/>
 
-            <AutoCompleteTextView android:id="@+id/signUpEmail"
+            <AutoCompleteTextView android:id="@+id/loginEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -30,37 +30,30 @@
 
         <TableRow>
 
-        <TextView android:id="@+id/signUpPasswordLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_sign_up_password"
-            android:layout_weight="0"/>
+            <TextView android:id="@+id/loginPasswordLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_sign_up_password"
+                android:layout_weight="0"/>
 
-        <EditText android:id="@+id/signUpPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_password"
-            android:layout_weight="1"
-            android:inputType="textPassword" />
+            <EditText android:id="@+id/loginPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:layout_weight="1"
+                android:inputType="textPassword" />
 
         </TableRow>
 
 
     </TableLayout>
 
-    <Button android:id="@+id/button_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_sign_up"
-        android:background="#FF5722"
-        android:textColor="@android:color/white"/>
-
-    <Button android:id="@+id/link_login"
+    <Button android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_log_in"
-        android:background="@android:color/transparent"
-        android:textColor="#FF5722"/>
+        android:background="#FF5722"
+        android:textColor="@android:color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,15 +61,15 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
 
-        <Button android:id="@+id/button_facebook_sign_up"
+        <Button android:id="@+id/button_facebook_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log in with Facebook"/>
-        <Button android:id="@+id/button_twitter_sign_up"
+        <Button android:id="@+id/button_twitter_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log in with Twitter"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

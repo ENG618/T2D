@@ -62,7 +62,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         setButtonClickListeners(view);
-        getAccouts();
+        getAccounts();
 
         emailField = (AutoCompleteTextView) view.findViewById(R.id.signUpEmail);
         emailField.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(emailSet)));
@@ -72,7 +72,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    private void getAccouts() {
+    private void getAccounts() {
         AccountManager manager = (AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE);
         Account[] list = manager.getAccounts();
 
@@ -86,11 +86,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     private void setButtonClickListeners(View view) {
         Button signUp = (Button) view.findViewById(R.id.button_sign_up);
         signUp.setOnClickListener(this);
-        Button logIn = (Button) view.findViewById(R.id.button_log_in);
+        Button logIn = (Button) view.findViewById(R.id.link_login);
         logIn.setOnClickListener(this);
-        Button signUpWithFacebook = (Button) view.findViewById(R.id.button_facebook_log_in);
+        Button signUpWithFacebook = (Button) view.findViewById(R.id.button_facebook_sign_up);
         signUpWithFacebook.setOnClickListener(this);
-        Button signUpWithTwitter = (Button) view.findViewById(R.id.button_twitter_log_in);
+        Button signUpWithTwitter = (Button) view.findViewById(R.id.button_twitter_sign_up);
         signUpWithTwitter.setOnClickListener(this);
     }
 
@@ -108,8 +108,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_log_in: {
+            case R.id.link_login: {
                 // Load login fragment
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.list_container, LogInFragment.newInstance())
+                        .commit();
                 break;
             }
             case R.id.button_sign_up: {
@@ -127,11 +130,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 // Pull up dropdown to select for user accounts.
                 break;
             }
-            case R.id.button_facebook_log_in: {
+            case R.id.button_facebook_sign_up: {
                 mListener.facebookSignUp();
                 break;
             }
-            case R.id.button_twitter_log_in: {
+            case R.id.button_twitter_sign_up: {
                 break;
             }
         }
@@ -160,7 +163,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                     // Hide keyboard
                     hideKeyboard();
 
-                    Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
+                    showToast("Sign up successful");
                     getFragmentManager().beginTransaction()
                             .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
                             .commit();

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.garciaericn.t2d.data.Device;
 import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
+import com.garciaericn.t2d.fragments.LogInFragment;
 import com.garciaericn.t2d.fragments.SignUpFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -24,7 +25,8 @@ import java.text.ParseException;
 
 public class DevicesActivity extends Activity implements
         DevicesCardViewFragment.OnFragmentInteractionListener,
-        SignUpFragment.SignUpFragmentCallbacks{
+        SignUpFragment.SignUpFragmentCallbacks,
+        LogInFragment.LoginFragmentCallbacks{
 
     private AdView adView;
     private static final String DEVICE_ID = "3FCECABB61B244A968AC658FD8EE05D9";
@@ -88,5 +90,10 @@ public class DevicesActivity extends Activity implements
 //                }
 //            }
 //        });
+    }
+
+    @Override
+    public void facebookLogin() {
+
     }
 }
