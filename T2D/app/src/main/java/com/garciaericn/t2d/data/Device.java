@@ -1,68 +1,60 @@
 package com.garciaericn.t2d.data;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.UUID;
 
 /**
  * Full Sail University
  * Mobile Development BS
  * Created by ENG618-Mac on 1/17/15.
  */
-public class Device extends ParseObject{
+@ParseClassName("Devices")
+public class Device extends ParseObject {
 
-    public static final String DEVICE_NAME = "DEVICE_NAME";
-    public static final String CURRENT_BATTERY_LEVEL = "CURRENT_BATTERY_LEVEL";
-    public static final String IS_CHARGING = "IS_CHARGING";
+    private static final String DEVICE_NAME = "deviceName";
+    private static final String BATTERY_LEVEL = "batteryLevel";
+    private static final String IS_CHARGING = "isCharging";
+    private static final String DEVICE_UUID = "uuid";
+    private static final String USER = "deviceUser";
 
-    private String deviceName;
-    private float currentBatteryLevel;
-    private boolean isCharging;
-
-    public Device() {
+    public String getUser() {
+        return getString(USER);
     }
-
-    public Device(String deviceName, float currentBatteryLevel, boolean isCharging) {
-        this.deviceName = deviceName;
-        this.currentBatteryLevel = currentBatteryLevel;
-        this.isCharging = isCharging;
-
-
-        ParseObject device = new ParseObject("Device");
-        device.put(DEVICE_NAME, deviceName);
-        device.put(CURRENT_BATTERY_LEVEL, currentBatteryLevel);
-        device.put(IS_CHARGING, isCharging);
-        device.pinInBackground();
-        device.saveInBackground();
-
-    }
-
-    // Getters and Setters
-
 
     public String getDeviceName() {
-        return deviceName;
+        return getString(DEVICE_NAME);
     }
 
     public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+        put(DEVICE_NAME, deviceName);
     }
 
-    public float getCurrentBatteryLevel() {
-        return currentBatteryLevel;
+    public int getBatteryLevel() {
+        return getInt(BATTERY_LEVEL);
     }
 
-    public void setCurrentBatteryLevel(float currentBatteryLevel) {
-        this.currentBatteryLevel = currentBatteryLevel;
+
+    public void setBatteryLevel(int batateryLevel) {
+        put(BATTERY_LEVEL, batateryLevel);
     }
 
     public boolean isCharging() {
-        return isCharging;
+        return getBoolean(IS_CHARGING);
     }
 
-    public void setCharging(boolean isCharging) {
-        this.isCharging = isCharging;
+    public void setUuidString() {
+        UUID uuid = UUID.randomUUID();
+        put(DEVICE_UUID, uuid.toString());
     }
 
-    public void updateDeviceInParse() {
+    public String getUuidString() {
+        return getString(DEVICE_UUID);
+    }
 
+    public static ParseQuery<Device> getQuery() {
+        return ParseQuery.getQuery(Device.class);
     }
 }

@@ -59,14 +59,16 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
 
         Toast.makeText(getActivity(), "Battery level: " + mBatteryHelper.getCurrentBatteryLevel() + "%", Toast.LENGTH_LONG).show();
 
-        Device currentDevice = new Device(Build.MODEL, mBatteryHelper.getCurrentBatteryLevel(), mBatteryHelper.isCharging());
+        // Update device stats
 
-        ParseObject device = new ParseObject("Device");
-        device.put(Device.DEVICE_NAME, Build.MODEL);
-        device.put(Device.CURRENT_BATTERY_LEVEL, mBatteryHelper.getCurrentBatteryLevel());
-        device.put(Device.IS_CHARGING, mBatteryHelper.isCharging());
-        device.pinInBackground();
-        device.saveInBackground();
+//        Device currentDevice = new Device(Build.MODEL, mBatteryHelper.getCurrentBatteryLevel(), mBatteryHelper.isCharging());
+//
+//        ParseObject device = new ParseObject("Device");
+//        device.put(Device.DEVICE_NAME, Build.MODEL);
+//        device.put(Device.BATTERY_LEVEL, mBatteryHelper.getCurrentBatteryLevel());
+//        device.put(Device.IS_CHARGING, mBatteryHelper.isCharging());
+//        device.pinInBackground();
+//        device.saveInBackground();
 
     }
 
