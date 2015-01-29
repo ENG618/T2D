@@ -70,39 +70,11 @@ public class DevicesActivity extends Activity implements
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            // do stuff with the user
-            ParseQuery<Device> query = ParseQuery.getQuery(Device.DEVICES);
-//                new ParseQuery<Device>(Device.DEVICES);
-            query.whereEqualTo("deviceUser", ParseUser.getCurrentUser());
-            query.findInBackground(new FindCallback<Device>() {
-                @Override
-                public void done(List<Device> devices, com.parse.ParseException e) {
-                    if (e == null) {
-                        // Loop through return devices
-                        for (Device device : devices) {
-                            Device currentDevice = new Device();
-                            currentDevice.setDeviceName(device.getDeviceName());
-                            currentDevice.setBatteryLevel(device.getBatteryLevel());
-                            currentDevice.setIsCharging(device.isCharging());
-                            mDevices.add(currentDevice);
-                        }
-                        getFragmentManager().beginTransaction()
-                                .replace(R.id.list_container, DevicesCardViewFragment.newInstance(mDevices))
-                                .commit();
-                    } else {
-                        // Something went wrong
-                        Toast.makeText(getApplicationContext(), "Error: " + e.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-
-
-
-//            getFragmentManager().beginTransaction()
-//                    .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
-//                    .commit();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+                    .commit();
         } else {
-            // show the signup or login screen
+            // show the sign up or login screen
             getFragmentManager().beginTransaction()
                     .replace(R.id.list_container, SignUpFragment.newInstance())
                     .commit();
