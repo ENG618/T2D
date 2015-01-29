@@ -23,6 +23,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     // Preference keys
     public static final String TEST_KEY = "TEST_KEY";
     public static final String LOG_OUT = "LOG_OUT";
+    public static final String ABOUT = "ABOUT";
 
     public SettingsFragment() {
 

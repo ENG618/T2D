@@ -14,6 +14,8 @@ import java.util.UUID;
 @ParseClassName("Devices")
 public class Device extends ParseObject {
 
+    public static final String DEVICES = "Devices";
+
     private static final String DEVICE_NAME = "deviceName";
     private static final String BATTERY_LEVEL = "batteryLevel";
     private static final String IS_CHARGING = "isCharging";
@@ -43,6 +45,10 @@ public class Device extends ParseObject {
 
     public boolean isCharging() {
         return getBoolean(IS_CHARGING);
+    }
+
+    public void setIsCharging(boolean isCharging) {
+        put(IS_CHARGING, isCharging);
     }
 
     public void setUuidString() {

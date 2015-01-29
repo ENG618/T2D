@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.garciaericn.t2d.data.Device;
 import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
@@ -29,9 +30,12 @@ public class T2DApplication extends Application {
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
-
+        // Initialize parse for application
         Parse.initialize(this, "mlbATdfRQ2RMJmNaVjjDcIybrtKnlEmic94bBL6r", "20c54czHXPKcb4ErBfbQe9q9vE9kaf6zS0A4GeLA");
-
+        // Allow anonymous users
+        ParseUser.enableAutomaticUser();
+        // Set default permissions to on be accessible to user
+        ParseACL.setDefaultACL(new ParseACL(), true);
 
         ParsePush.subscribeInBackground("", new SaveCallback() {
 

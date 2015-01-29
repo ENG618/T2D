@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.garciaericn.t2d.R;
+import com.google.android.gms.ads.AdView;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -58,6 +59,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        mListener.hideAd();
 
         setButtonClickListeners(view);
         getAccounts();
@@ -147,5 +150,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener{
 
     public interface LoginFragmentCallbacks {
         public void facebookLogin();
+        public void hideAd();
     }
 }

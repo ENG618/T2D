@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.garciaericn.t2d.R;
+import com.google.android.gms.ads.AdView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -54,12 +55,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         if (emailSet == null) {
             emailSet = new HashSet<String>();
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+
+        mListener.hideAd();
 
         setButtonClickListeners(view);
         getAccounts();
@@ -178,5 +180,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
     public interface SignUpFragmentCallbacks {
         public void facebookSignUp();
+        public void hideAd();
     }
 }

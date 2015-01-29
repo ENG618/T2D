@@ -1,26 +1,38 @@
 package com.garciaericn.t2d;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.garciaericn.t2d.data.Device;
 import com.garciaericn.t2d.fragments.DevicesCardViewFragment;
 import com.garciaericn.t2d.fragments.LogInFragment;
+import com.garciaericn.t2d.fragments.SettingsFragment;
 import com.garciaericn.t2d.fragments.SignUpFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.text.ParseException;
+import java.util.List;
 
 
 public class DevicesActivity extends Activity implements
@@ -28,8 +40,12 @@ public class DevicesActivity extends Activity implements
         SignUpFragment.SignUpFragmentCallbacks,
         LogInFragment.LoginFragmentCallbacks{
 
-    private AdView adView;
+    private static final int DETAIL_ACTIVITY_CODE = 100;
+
     private static final String DEVICE_ID = "3FCECABB61B244A968AC658FD8EE05D9";
+    private AdView adView;
+    private SharedPreferences settings;
+    private List<Device> mDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +56,51 @@ public class DevicesActivity extends Activity implements
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
         adView.loadAd(adRequest);
 
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        if (settings.getBoolean(SettingsFragment.ABOUT, true)) {
+            // Do initial load of device and stats
+//            ParseObject newDevice = new ParseObject(Device);
+
+            // Update settings
+            settings.edit()
+                    .putBoolean(SettingsFragment.ABOUT, false)
+                    .apply();
+        }
+
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             // do stuff with the user
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
-                    .commit();
+            ParseQuery<Device> query = ParseQuery.getQuery(Device.DEVICES);
+//                new ParseQuery<Device>(Device.DEVICES);
+            query.whereEqualTo("deviceUser", ParseUser.getCurrentUser());
+            query.findInBackground(new FindCallback<Device>() {
+                @Override
+                public void done(List<Device> devices, com.parse.ParseException e) {
+                    if (e == null) {
+                        // Loop through return devices
+                        for (Device device : devices) {
+                            Device currentDevice = new Device();
+                            currentDevice.setDeviceName(device.getDeviceName());
+                            currentDevice.setBatteryLevel(device.getBatteryLevel());
+                            currentDevice.setIsCharging(device.isCharging());
+                            mDevices.add(currentDevice);
+                        }
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.list_container, DevicesCardViewFragment.newInstance(mDevices))
+                                .commit();
+                    } else {
+                        // Something went wrong
+                        Toast.makeText(getApplicationContext(), "Error: " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+
+
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.list_container, DevicesCardViewFragment.newInstance())
+//                    .commit();
         } else {
             // show the signup or login screen
             getFragmentManager().beginTransaction()
@@ -96,4 +150,32 @@ public class DevicesActivity extends Activity implements
     public void facebookLogin() {
 
     }
+
+    @Override
+    public void hideAd() {
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        adView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showAd() {
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        adView.setVisibility(View.VISIBLE);
+
+    }
+
+//    private class DevicesAdapter extends ParseQueryAdapter<Device> {
+//
+//        public DevicesAdapter(Context context, QueryFactory<Device> queryFactory) {
+//            super(context, queryFactory);
+//        }
+//
+//        @Override
+//        public View getItemView(Device object, View v, ViewGroup parent) {
+//            RecyclerView.ViewHolder holder;
+//            if (v == null) {
+////                v = inflater.infla
+//            }
+//        }
+//    }
 }

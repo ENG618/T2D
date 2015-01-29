@@ -15,4 +15,10 @@
         android:title="Log out"
         android:summary="This will log you out of the application"/>
 
+    <Preference
+        android:key="ABOUT"
+        android:title="About"
+        android:summary="Created by: Eric Garcia"
+        android:defaultValue="true" />
+
 </PreferenceScreen>

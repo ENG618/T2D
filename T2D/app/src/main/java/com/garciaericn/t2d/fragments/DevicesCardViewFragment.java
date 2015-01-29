@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.BatteryManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +15,15 @@ import android.widget.Toast;
 import com.garciaericn.t2d.R;
 import com.garciaericn.t2d.data.BatteryHelper;
 import com.garciaericn.t2d.data.Device;
-import com.parse.ParseObject;
+import com.garciaericn.t2d.data.DeviceAdapter;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Full Sail University
@@ -29,14 +34,16 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
 
     private OnFragmentInteractionListener mListener;
     private BatteryHelper mBatteryHelper;
-    Intent mbatteryStatus;
+    Intent mBatteryStatus;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private DeviceAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private List<Device> mDevices;
 
     public DevicesCardViewFragment() {
         // Required empty public constructor
+        mDevices = new ArrayList<Device>();
     }
 
     public static DevicesCardViewFragment newInstance() {
@@ -49,11 +56,12 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get arguments
+        getDevices();
 
         mBatteryHelper = new BatteryHelper(getActivity());
 
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        mbatteryStatus = getActivity().registerReceiver(null, intentFilter);
+        mBatteryStatus = getActivity().registerReceiver(null, intentFilter);
 
         // Update stats of current device.
 
@@ -61,29 +69,26 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
 
         // Update device stats
 
-//        Device currentDevice = new Device(Build.MODEL, mBatteryHelper.getCurrentBatteryLevel(), mBatteryHelper.isCharging());
-//
-//        ParseObject device = new ParseObject("Device");
-//        device.put(Device.DEVICE_NAME, Build.MODEL);
-//        device.put(Device.BATTERY_LEVEL, mBatteryHelper.getCurrentBatteryLevel());
-//        device.put(Device.IS_CHARGING, mBatteryHelper.isCharging());
-//        device.pinInBackground();
-//        device.saveInBackground();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_devices_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_devices_list, container, false);
+
+        mListener.showAd();
 
         // Obtain recycler view
         mRecyclerView = (RecyclerView) view.findViewById(R.id.devices_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
+        mAdapter = new DeviceAdapter(getActivity(), mDevices);
+
+        // Set adapter
+        mRecyclerView.setAdapter(mAdapter);
+
         // Set layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
 
 
         return view;
@@ -106,12 +111,48 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
         mListener = null;
     }
 
+    public List<Device> getDevices() {
+
+        ParseQuery<Device> query = ParseQuery.getQuery(Device.DEVICES);
+//                new ParseQuery<Device>(Device.DEVICES);
+        query.whereEqualTo("deviceUser", ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Device>() {
+            @Override
+            public void done(List<Device> devices, ParseException e) {
+                if (e == null) {
+                    // Loop through return devices
+                    for (Device device : devices) {
+                        Device currentDevice = new Device();
+                        currentDevice.setDeviceName(device.getDeviceName());
+                        currentDevice.setBatteryLevel(device.getBatteryLevel());
+                        currentDevice.setIsCharging(device.isCharging());
+                        mDevices.add(currentDevice);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    // Something went wrong
+                    Toast.makeText(getActivity(), "Error: " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        return mDevices;
+    }
+
     @Override
     public void onClick(View v) {
         // Click events go here
     }
 
+    public static DevicesCardViewFragment newInstance(List<Device> mDevices) {
+        DevicesCardViewFragment fragment = new DevicesCardViewFragment();
+
+        Bundle args = new Bundle();
+
+        return fragment;
+    }
+
     public interface OnFragmentInteractionListener {
-        // TODO: Add any methods here to communicate with activity
+        public void showAd();
     }
 }

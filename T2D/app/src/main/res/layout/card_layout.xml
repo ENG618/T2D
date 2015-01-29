@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,14 +7,14 @@
     android:tag="cards main container">
 
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="5dp"
-        android:layout_margin="10dp">
+        card_view:cardElevation="5dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -28,29 +26,29 @@
                 android:id="@+id/device_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/placeholder_device_name"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"/>
+                android:text="@string/placeholder_device_name"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/isChargingTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder_is_charging"
-                android:layout_below="@id/device_name_tv"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_below="@id/device_name_tv"
+                android:text="@string/placeholder_is_charging" />
 
 
             <TextView
                 android:id="@+id/battery_level_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/placeholder_percentage" />
+                android:layout_alignParentRight="true"
+                android:text="@string/placeholder_percentage"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </RelativeLayout>
 
