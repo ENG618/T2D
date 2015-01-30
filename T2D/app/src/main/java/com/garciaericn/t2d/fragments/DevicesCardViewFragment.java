@@ -3,8 +3,10 @@ package com.garciaericn.t2d.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +24,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
     private DeviceAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Device> mDevices;
+    private SharedPreferences settings;
 
     public DevicesCardViewFragment() {
         // Required empty public constructor
@@ -55,15 +57,12 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get arguments
-        getDevices();
 
+        settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mBatteryHelper = new BatteryHelper(getActivity());
 
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        mBatteryStatus = getActivity().registerReceiver(null, intentFilter);
-
         // Update stats of current device.
+        loadCurrentDevice();
 
         Toast.makeText(getActivity(), "Battery level: " + mBatteryHelper.getCurrentBatteryLevel() + "%", Toast.LENGTH_LONG).show();
 
@@ -80,6 +79,8 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
         // Obtain recycler view
         mRecyclerView = (RecyclerView) view.findViewById(R.id.devices_recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
+        getDevices();
 
         mAdapter = new DeviceAdapter(getActivity(), mDevices);
 
@@ -111,10 +112,9 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
         mListener = null;
     }
 
-    public List<Device> getDevices() {
+    private List<Device> getDevices() {
 
         ParseQuery<Device> query = ParseQuery.getQuery(Device.DEVICES);
-//                new ParseQuery<Device>(Device.DEVICES);
         query.whereEqualTo("deviceUser", ParseUser.getCurrentUser());
         query.findInBackground(new FindCallback<Device>() {
             @Override
@@ -135,21 +135,31 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
                 }
             }
         });
-
         return mDevices;
     }
+
+    private void loadCurrentDevice() {
+        if (settings.getBoolean(SettingsFragment.ABOUT, true)) {
+            // Do initial load of device and stats
+            Device newDevice = new Device();
+            newDevice.setUser(ParseUser.getCurrentUser());
+            newDevice.setDeviceName(Build.MODEL);
+            newDevice.setBatteryLevel(mBatteryHelper.getCurrentBatteryLevel());
+            newDevice.setIsCharging(mBatteryHelper.isCharging());
+            newDevice.saveInBackground();
+            // Update settings
+            settings.edit()
+                    .putBoolean(SettingsFragment.ABOUT, false)
+                    .apply();
+        } else {
+            // Refresh data
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
         // Click events go here
-    }
-
-    public static DevicesCardViewFragment newInstance(List<Device> mDevices) {
-        DevicesCardViewFragment fragment = new DevicesCardViewFragment();
-
-        Bundle args = new Bundle();
-
-        return fragment;
     }
 
     public interface OnFragmentInteractionListener {

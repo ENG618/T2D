@@ -3,8 +3,7 @@ package com.garciaericn.t2d.data;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.util.UUID;
+import com.parse.ParseUser;
 
 /**
  * Full Sail University
@@ -16,14 +15,21 @@ public class Device extends ParseObject {
 
     public static final String DEVICES = "Devices";
 
-    private static final String DEVICE_NAME = "deviceName";
-    private static final String BATTERY_LEVEL = "batteryLevel";
-    private static final String IS_CHARGING = "isCharging";
-    private static final String DEVICE_UUID = "uuid";
-    private static final String USER = "deviceUser";
+    public static final String DEVICE_NAME = "deviceName";
+    public static final String BATTERY_LEVEL = "batteryLevel";
+    public static final String IS_CHARGING = "isCharging";
+    public static final String USER = "deviceUser";
+
+    public Device() {
+        // Required no arguments constructor
+    }
 
     public String getUser() {
         return getString(USER);
+    }
+
+    public void setUser(ParseUser user) {
+        put(USER, user);
     }
 
     public String getDeviceName() {
@@ -49,15 +55,6 @@ public class Device extends ParseObject {
 
     public void setIsCharging(boolean isCharging) {
         put(IS_CHARGING, isCharging);
-    }
-
-    public void setUuidString() {
-        UUID uuid = UUID.randomUUID();
-        put(DEVICE_UUID, uuid.toString());
-    }
-
-    public String getUuidString() {
-        return getString(DEVICE_UUID);
     }
 
     public static ParseQuery<Device> getQuery() {
