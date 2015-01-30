@@ -7,7 +7,8 @@
 
     <FrameLayout android:id="@+id/list_container"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/adView"/>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/admob_id"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

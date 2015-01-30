@@ -103,6 +103,9 @@ public class DevicesActivity extends Activity implements
 
     @Override
     public void showAd() {
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
+        adView.loadAd(adRequest);
+
         AdView adView = (AdView) this.findViewById(R.id.adView);
         adView.setVisibility(View.VISIBLE);
 

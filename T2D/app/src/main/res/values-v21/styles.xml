@@ -4,12 +4,14 @@
     <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <!-- Main theme colors -->
-        <!--   your app branding color for the app bar -->
-        <item name="android:colorPrimary">#009688</item>
-        <!--   darker variant for the status bar and contextual app bars -->
-        <item name="android:colorPrimaryDark">#00796B</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">#FF5722</item>
+        <!-- Your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!-- Darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!-- Theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+        <!-- Set default background color-->
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
 </resources>

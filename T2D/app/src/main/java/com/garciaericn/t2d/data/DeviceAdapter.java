@@ -53,6 +53,7 @@
             } else {
                 holder.isChargingTV.setVisibility(View.GONE);
             }
+
         }
 
         @Override
@@ -60,7 +61,7 @@
             return data.size();
         }
 
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             // Temp data set
             private String[] mDataset;
 
@@ -73,6 +74,11 @@
                 deviceNameTV = (TextView) itemView.findViewById(R.id.device_name_tv);
                 batteryLevelTV = (TextView) itemView.findViewById(R.id.battery_level_tv);
                 isChargingTV = (TextView) itemView.findViewById(R.id.isChargingTV);
+            }
+
+            @Override
+            public void onClick(View v) {
+
             }
         }
     }
