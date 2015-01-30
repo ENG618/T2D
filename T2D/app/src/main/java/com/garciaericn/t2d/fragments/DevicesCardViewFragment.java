@@ -2,13 +2,13 @@ package com.garciaericn.t2d.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +31,11 @@ import java.util.List;
  * Mobile Development BS
  * Created by ENG618-Mac on 1/20/15.
  */
-public class DevicesCardViewFragment extends Fragment implements View.OnClickListener {
+public class DevicesCardViewFragment extends Fragment implements DeviceAdapter.ClickListener {
 
+    private static final String LOGTAG = "DevicesCardViewFragment";
     private OnFragmentInteractionListener mListener;
     private BatteryHelper mBatteryHelper;
-    Intent mBatteryStatus;
 
     private RecyclerView mRecyclerView;
     private DeviceAdapter mAdapter;
@@ -84,6 +84,8 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
 
         mAdapter = new DeviceAdapter(getActivity(), mDevices);
 
+        // Set clickListener
+        mAdapter.setClickListener(this);
         // Set adapter
         mRecyclerView.setAdapter(mAdapter);
 
@@ -156,10 +158,10 @@ public class DevicesCardViewFragment extends Fragment implements View.OnClickLis
         }
     }
 
-
     @Override
-    public void onClick(View v) {
-        // Click events go here
+    public void deviceSelected(View view, int position) {
+        Log.i(LOGTAG, "Selected position: " + position);
+        Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {
