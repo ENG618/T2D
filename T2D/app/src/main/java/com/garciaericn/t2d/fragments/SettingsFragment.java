@@ -38,7 +38,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         addPreferencesFromResource(R.xml.settings);
 
         // Set click listeners
-        findPreference(TEST_KEY).setOnPreferenceClickListener(this);
         findPreference(LOG_OUT).setOnPreferenceClickListener(this);
 
     }
@@ -54,10 +53,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
                 Intent relaodIntent = new Intent(getActivity(), DevicesActivity.class);
                 startActivity(relaodIntent);
-                return true;
-            }
-            case TEST_KEY: {
-                Toast.makeText(getActivity(), "Testing", Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
