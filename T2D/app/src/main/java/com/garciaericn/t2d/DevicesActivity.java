@@ -1,9 +1,11 @@
 package com.garciaericn.t2d;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +19,7 @@ import com.google.android.gms.ads.AdView;
 import com.parse.ParseUser;
 
 
-public class DevicesActivity extends Activity implements
+public class DevicesActivity extends ActionBarActivity implements
         DevicesCardViewFragment.OnFragmentInteractionListener,
         SignUpFragment.SignUpFragmentCallbacks,
         LogInFragment.LoginFragmentCallbacks {
@@ -25,17 +27,20 @@ public class DevicesActivity extends Activity implements
     private static final int DETAIL_ACTIVITY_CODE = 100;
 
     private static final String DEVICE_ID = "3FCECABB61B244A968AC658FD8EE05D9";
+    private Toolbar toolbar;
     private AdView adView;
     private SharedPreferences settings;
-    private BatteryHelper batteryHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
 
-        batteryHelper = new BatteryHelper(this);
 
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        // Set up ad
         adView = (AdView) this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
         adView.loadAd(adRequest);
@@ -47,6 +52,7 @@ public class DevicesActivity extends Activity implements
                     .commit();
         } else {
             // show the sign up or login screen
+//            getSupportFragmentManager().findFragmentById(R.id.fragment_devices_list)
             getFragmentManager().beginTransaction()
                     .replace(R.id.list_container, SignUpFragment.newInstance())
                     .commit();

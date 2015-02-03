@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <fragment
+        android:id="@+id/device_details_fragment"
+        android:name="com.garciaericn.t2d.fragments.DeviceDetailsFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/app_bar"
+        app:layout="@layout/fragment_device_details"
+        tools:layout="@layout/fragment_device_details" />
+
+</RelativeLayout>
